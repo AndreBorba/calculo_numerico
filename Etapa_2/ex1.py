@@ -2,7 +2,7 @@ import numpy as np
 
 def Assembly(conec, C):
     
-    lista_mtx = []  # lista que conterá os valores da matriz
+    lista_mtx = []  # lista que conterá os valores da matriz de conectores
     for i in conec: # loops para formar a lista aicma
         for j in i:
             lista_mtx.append(j)
