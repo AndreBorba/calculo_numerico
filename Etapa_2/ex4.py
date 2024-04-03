@@ -58,13 +58,8 @@ def escreve_mtx_D(C, conec):
     D = np.zeros(shape=(nc,nv))
 
     for k in range(nc):
-        for j in range(nv):
-            if(j == conec[k,0]):
-                D[k,j] = 1
-            elif(j == conec[k,1]):
-                D[k,j] = -1
-            else:
-                D[k,j] = 0
+        D[k,conec[k,0]-1] = 1
+        D[k,conec[k,1]-1] = -1
 
     return D
 
