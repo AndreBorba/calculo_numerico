@@ -33,8 +33,6 @@ def SolveNetwork(conec, C, natm, nB, QB):
     for i in range(len(b)):
         if(i == nB-1):
             b[i] = QB
-        else:
-            b[i] = 0
 
     pressure = np.linalg.solve(Atilde, b)
 
