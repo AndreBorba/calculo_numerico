@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D # precisa desse import pra rodar no meu pc
+
 
 def Assembly(conec, C):
     
@@ -137,15 +139,25 @@ nx, ny = 10, 12
 nv, nc, conec, C, coord = GeraRede(nx,ny,CH,CV)
 
 # determinando o numero do nó que está no canto superior direito (que é natm neste exemplo)
-#natm = ny*(nx-1)
-natm = 5
+# os nós sao enumerados da esqurda para a direita e de baixo para cima, assim:
+#                                                                              3 4 5                                     
+#                                                                              0 1 2 
+natm = nx*ny - 1
 
 # canto inferior esquerdo (nB neste exemplo)
-nB = ny-1
+nB = 0
 QB = 3
 
 # Calculando o vetor de pressões 
-pressure = SolveNetwork(conec, C, natm, nB, QB)
+pressure1 = SolveNetwork(conec, C, natm, nB, QB)
+pressure2 = SolveNetwork(conec, C, 55, 0, QB)
+pressure3 = SolveNetwork(conec, C, 0, 55, QB)
 
-PlotPressure(nx, ny, pressure)
-PlotPressureAsSurface(nx, ny, pressure)
+PlotPressure(nx, ny, pressure1)
+PlotPressureAsSurface(nx, ny, pressure1)
+
+PlotPressure(nx, ny, pressure2)
+PlotPressureAsSurface(nx, ny, pressure2)
+
+PlotPressure(nx, ny, pressure3)
+PlotPressureAsSurface(nx, ny, pressure3)
