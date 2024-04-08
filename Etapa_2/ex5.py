@@ -151,7 +151,7 @@ QB = 3
 # Calculando o vetor de pressões 
 pressure1 = SolveNetwork(conec, C, natm, nB, QB)
 pressure2 = SolveNetwork(conec, C, 55, 0, QB)
-pressure3 = SolveNetwork(conec, C, 0, 55, QB)
+pressure3 = SolveNetwork(conec, C, 6, 0, QB)
 
 PlotPressure(nx, ny, pressure1)
 PlotPressureAsSurface(nx, ny, pressure1)
