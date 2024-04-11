@@ -204,12 +204,12 @@ t0 = time.time()
 pressure7 = SolveNetwork(conec_7, C_7, natm_7, 0, 3)
 t7 = time.time() - t0
 
-'''
+
 print('Tempo 1: ', t1)
 print('Tempo 2: ', t2)
 print('Tempo 3: ', t3)
 print('Tempo 4: ', t4)
-'''
+
 
 # lista dos tempos e lista dos produtos nx*ny = nv 
 tempos = [t1, t2, t3, t4, t5, t6, t7]
