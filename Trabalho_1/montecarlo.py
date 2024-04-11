@@ -109,32 +109,32 @@ num_simulacoes = 6500
 # probabilidade = MonteCarlo(C, 0.4, Centup, conec, natm, nB, QB, num_simulacoes)
 # print(probabilidade)
 
-# probs_p0 = np.linspace(0, 1, num=10)
-# probabilidades_MC = []
-# for p0 in probs_p0:
-#     probabilidade = MonteCarlo(C, p0, Centup, conec, natm, nB, QB, num_simulacoes)
-#     probabilidades_MC.append(probabilidade)
+probs_p0 = np.linspace(0, 1, num=20)
+probabilidades_MC = []
+for p0 in probs_p0:
+    probabilidade = MonteCarlo(C, p0, Centup, conec, natm, nB, QB, num_simulacoes)
+    probabilidades_MC.append(probabilidade)
 
-# plt.plot(probs_p0, probabilidades_MC)
-# plt.xlabel('Probabilidade de Entupimento (p0)')
-# plt.ylabel('Probabilidade de Pressão Acima de 12')
-# plt.grid()
-# plt.show()
+plt.plot(probs_p0, probabilidades_MC)
+plt.xlabel('Probabilidade de Entupimento (p0)')
+plt.ylabel('Probabilidade de Pressão Acima de 12')
+plt.grid()
+plt.show()
 # print(probabilidade)
 
 num_realizacoes = np.linspace(100, num_simulacoes, num=50, dtype=int)
-probabilidades_MC_1 = []
 valores_p0 = [0.2, 0.4, 0.6, 0.8]
-probabilidades_MC_p0 = []
+plt.figure(figsize=(10,6))
 
 for p0 in valores_p0:
-  probabilidades_MC = []
+  probabilidades_MC.clear()
   for realizacoes in num_realizacoes:
     probabilidade = MonteCarlo(C, p0, Centup, conec, natm, nB, QB, realizacoes)
     probabilidades_MC.append(probabilidade)
-  plt.plot(num_realizacoes, probabilidades_MC, label=f'p0 = {p0}')
+  plt.plot(num_realizacoes, probabilidades_MC, label=f'p0 = {p0}') 
 
 plt.xlabel("Número de realizações")
 plt.ylabel("Probababilidade de pressão acima de 12")
+plt.legend()
 plt.grid()
 plt.show()
