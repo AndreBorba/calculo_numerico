@@ -128,10 +128,11 @@ plt.figure(figsize=(10,6))
 
 for p0 in valores_p0:
   probabilidades_MC.clear()
+
   for realizacoes in num_realizacoes:
     probabilidade = MonteCarlo(C, p0, Centup, conec, natm, nB, QB, realizacoes)
     probabilidades_MC.append(probabilidade)
-  plt.plot(num_realizacoes, probabilidades_MC, label=f'p0 = {p0}') 
+  plt.plot(num_realizacoes, probabilidades_MC, label=f'p0 = {p0}')
 
 plt.xlabel("Número de realizações")
 plt.ylabel("Probababilidade de pressão acima de 12")
