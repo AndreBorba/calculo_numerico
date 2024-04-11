@@ -124,13 +124,16 @@ num_simulacoes = 6500
 
 num_realizacoes = np.linspace(100, num_simulacoes, num=50, dtype=int)
 probabilidades_MC_1 = []
-p0 = 0.4
+valores_p0 = [0.2, 0.4, 0.6, 0.8]
+probabilidades_MC_p0 = []
 
-for realizacao in num_realizacoes:
-  probabilidade = MonteCarlo(C, p0, Centup, conec, natm, nB, QB, realizacao)
-  probabilidades_MC_1.append(probabilidade)
+for p0 in valores_p0:
+  probabilidades_MC = []
+  for realizacoes in num_realizacoes:
+    probabilidade = MonteCarlo(C, p0, Centup, conec, natm, nB, QB, realizacoes)
+    probabilidades_MC.append(probabilidade)
+  plt.plot(num_realizacoes, probabilidades_MC, label=f'p0 = {p0}')
 
-plt.plot(num_realizacoes, probabilidades_MC_1)
 plt.xlabel("Número de realizações")
 plt.ylabel("Probababilidade de pressão acima de 12")
 plt.grid()
