@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D # precisa desse import pra rodar no meu pc
+import scipy.sparse as sp
+import scipy.sparse.linalg as spla
 
 def Assembly(conec, C):
     
@@ -36,7 +37,8 @@ def SolveNetwork(conec, C, natm, nB, QB):
         if(i == nB):
             b[i] = QB
 
-    pressure = np.linalg.solve(Atilde, b)
+    Atilde_sparse = sp.csr_matrix(Atilde)
+    pressure = spla.spsolve(Atilde_sparse, b)
 
     return pressure
 
@@ -73,20 +75,20 @@ def GeraRede(nx,ny,CH,CV):
 
     return nv, nc, conec, C, coord
 
-def RandomFailFinos(C, p0, Centup):
+def RandomFailFinos(C, p0, Centup, Cfino):
   Cnew = np.copy(C)
   nc = len(C)
   for k in range(nc):
     x = np.random.rand()
-    if(x <= p0):
+    if(x <= p0 and C[k] == Cfino):
       Cnew[k] = Centup
 
   return Cnew
 
-def MonteCarlo(C, p0, Centup, conec, natm, nB, QB, num_simulacoes):
+def MonteCarlo(C, p0, Centup, Cfino, conec, natm, nB, QB, num_simulacoes):
     pressao_acima_12 = 0
     for _ in range(num_simulacoes):
-        Cnew = RandomFailFinos(C, p0, Centup)
+        Cnew = RandomFailFinos(C, p0, Centup, Cfino)
         pressoes = SolveNetwork(conec, Cnew, natm, nB, QB)
         if np.max(pressoes) >= 12:
             pressao_acima_12 += 1
@@ -102,27 +104,28 @@ C[lst] = 20.0
 
 
 Centup = 0.2
+Cfino = 2
 natm = nv - 1
 nB = 0
 QB = 3
 num_simulacoes = 6500
-# probabilidade = MonteCarlo(C, 0.4, Centup, conec, natm, nB, QB, num_simulacoes)
+# probabilidade = MonteCarlo(C, 0.4, Centup, Cfino, conec, natm, nB, QB, num_simulacoes)
 # print(probabilidade)
 
 probs_p0 = np.linspace(0, 1, num=20)
 probabilidades_MC = []
 for p0 in probs_p0:
-    probabilidade = MonteCarlo(C, p0, Centup, conec, natm, nB, QB, num_simulacoes)
+    probabilidade = MonteCarlo(C, p0, Centup, Cfino, conec, natm, nB, QB, num_simulacoes)
     probabilidades_MC.append(probabilidade)
 
-plt.plot(probs_p0, probabilidades_MC)
+plt.plot(probs_p0, probabilidades_MC, marker='o')
 plt.xlabel('Probabilidade de Entupimento (p0)')
 plt.ylabel('Probabilidade de Pressão Acima de 12')
 plt.grid()
 plt.show()
-# print(probabilidade)
 
-num_realizacoes = np.linspace(100, num_simulacoes, num=50, dtype=int)
+
+num_realizacoes = np.linspace(1, num_simulacoes, num=50, dtype=int)
 valores_p0 = [0.2, 0.4, 0.6, 0.8]
 plt.figure(figsize=(10,6))
 
@@ -130,7 +133,8 @@ for p0 in valores_p0:
   probabilidades_MC.clear()
 
   for realizacoes in num_realizacoes:
-    probabilidade = MonteCarlo(C, p0, Centup, conec, natm, nB, QB, realizacoes)
+    realizacoes = int(realizacoes)
+    probabilidade = MonteCarlo(C, p0, Centup, Cfino, conec, natm, nB, QB, realizacoes)
     probabilidades_MC.append(probabilidade)
   plt.plot(num_realizacoes, probabilidades_MC, label=f'p0 = {p0}')
 
