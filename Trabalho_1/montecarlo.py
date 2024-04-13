@@ -120,7 +120,8 @@ for p0 in probs_p0:
 
 plt.plot(probs_p0, probabilidades_MC, marker='o')
 plt.xlabel('Probabilidade de Entupimento (p0)')
-plt.ylabel('Probabilidade de Pressão Acima de 12')
+plt.ylabel('Probabilidade de Pressão Acima de 12 em algum nó')
+plt.title("Probabilidade de pressão acima de 12 quando se varia o valor p0 (probabilidade de entupimento de canos finos)")
 plt.grid()
 plt.show()
 
@@ -141,5 +142,6 @@ for p0 in valores_p0:
 plt.xlabel("Número de realizações")
 plt.ylabel("Probababilidade de pressão acima de 12")
 plt.legend()
+plt.title("Probabilidade de pressão acima de 12 para diferentes valores de simulações")
 plt.grid()
 plt.show()
