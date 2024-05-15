@@ -1,5 +1,7 @@
 import numpy as np 
 import scipy 
+import time
+import matplotlib.pyplot as plt
 
 def gera_simetrica(n):
     A = np.random.rand(n,n)
@@ -23,11 +25,22 @@ def algoritmo_francis(n, max_iter, tol):
 
     return autovalores, V
 
-dimensoes = [10, 50, 100, 200]
+#dimensoes = [10, 50, 100, 200]
+dimensoes = [i for i in range(10,200,10)]
 max_iter = 1000
 tol = 1e-6
+tempos = []
 
 for n in dimensoes:
+    ti = time.time()
     autovalores, autovetores = algoritmo_francis(n, max_iter, tol)
-    print("Autovalores:", autovalores)
-    print("Autovetores:", autovetores)
+    tf = time.time() - ti
+    tempos.append(tf)
+
+print(tempos)
+
+plt.plot(dimensoes, tempos, marker='o')
+plt.xlabel('dimensão da matriz (n)')
+plt.ylabel('tempo')
+plt.grid()
+plt.show()
