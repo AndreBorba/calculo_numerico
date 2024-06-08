@@ -20,3 +20,4 @@ print(A)
 autovalores_calculados, autovetores_calculados = scipy.linalg.eigh(A)
 print("Autovalores calculados com scipy: ", autovalores_calculados)
 print("Autovetores calculados com scipy: ", autovetores_calculados)
+
