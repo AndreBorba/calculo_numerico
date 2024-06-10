@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 # Carregar os dados do arquivo
 data = np.loadtxt('/home/andre/Documentos/semestre3/calculo_numerico/Etapa_5/data.txt')
 
-# Função para aplicar o método das equações normais
+# Função para aplicar "equações normais"
 def equacao_normal(X, y):
     linhas_X = X.shape[0]
     coluna_1 = np.ones((linhas_X, 1)) # criando matriz coluna composta por "1" para depois juntar com a matriz X e formar a matriz A
@@ -19,7 +19,8 @@ def predict(X, constantes):
     return X_b @ constantes
 
 # Caso 1: c(3) = k1 + k2c(1)
-X1 = data[:, 0].reshape(-1, 1) # reshape para deixar X1 na forma de matriz coluna (argumento -1 pega o número total de elementos do array e o tranforma no número de linhas da matriz)
+#X1 = data[:, 0].reshape(-1, 1) reshape para deixar X1 na forma de matriz coluna (argumento -1 pega o número total de elementos do array e o tranforma no número de linhas da matriz)
+X1 = data[:, 0]
 y1 = data[:, 2]
 constantes_1 = equacao_normal(X1, y1)
 k0, k1 = constantes_1
@@ -55,7 +56,7 @@ plt.show()
 # Caso 3: c(4) = k1 + k2c(1) + k3c(2)
 # perceber que esse caso é espacial 3d
 X3 = np.c_[data[:, 0], data[:, 1]] # primeira coluna de X3 é de varáiveis compostas pela coluna 1 do .txt e segunda coluna de X3 é composta das variáveis da segunda coluna do .txt
-y3 = data[:, 3] # "y" da equação são os valores da quarta coluna do .txt
+y3 = data[:, 3] # "y" da equação são os valores da quarta coluna do .txt. Na verdade esse y pode ser considerado como "z"
 constantes_3 = equacao_normal(X3, y3) 
 k0, k1, k2 = constantes_3
 
@@ -67,6 +68,7 @@ x3_x_plot, x3_y_plot = np.meshgrid(np.linspace(min(data[:, 0]), max(data[:, 0]),
 X3_plot = np.c_[x3_x_plot.ravel(), x3_y_plot.ravel()] # ravel "achata" uma matriz, faz virar unidimensional
 y3_plot = predict(X3_plot, constantes_3).reshape(x3_x_plot.shape) # precisa ter a mesma dimensão de x3_x_plot e x3_y_plot para usar na função plot_surface
 # talvez fosse mais claro deixar a variável acima declarada como z3_plot, uma vez que ela representa os valores do eixo z de um par ordenado (x,y)
+# essa função predict está explicada nas notas do tablet
 
 # Plotando os resultados do Caso 3
 fig = plt.figure()
